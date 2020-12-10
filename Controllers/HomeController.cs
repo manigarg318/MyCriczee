@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using cricZee.Models;
+using Microsoft.AspNetCore.Authorization;
+
+using System.Diagnostics;
+
 
 namespace cricZee.Controllers
 {
@@ -17,7 +21,7 @@ namespace cricZee.Controllers
         {
             _logger = logger;
         }
-
+        [Authorize(Roles = "Admin, User")]
         public IActionResult Index()
         {
             return View();

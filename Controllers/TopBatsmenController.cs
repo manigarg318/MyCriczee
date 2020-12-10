@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using cricZee.Models;
+using Microsoft.AspNetCore.Authorization;
 
+using System.Diagnostics;
 namespace cricZee.Controllers
 {
     public class TopBatsmenController : Controller
@@ -19,6 +21,7 @@ namespace cricZee.Controllers
         }
 
         // GET: TopBatsmen
+        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.TopBatsmens.ToListAsync());

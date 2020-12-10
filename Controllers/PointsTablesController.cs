@@ -7,6 +7,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using cricZee.Models;
 
+using Microsoft.AspNetCore.Authorization;
+
+using System.Diagnostics;
+
 namespace cricZee.Controllers
 {
     public class PointsTablesController : Controller
@@ -19,12 +23,14 @@ namespace cricZee.Controllers
         }
 
         // GET: PointsTables
+        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.PointsTables.ToListAsync());
         }
 
         // GET: PointsTables/Details/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -43,6 +49,7 @@ namespace cricZee.Controllers
         }
 
         // GET: PointsTables/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
@@ -53,6 +60,7 @@ namespace cricZee.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("TeamId,Teams,Matches,Won,Lost,Tied,Points,Nrr,Nrrposition")] PointsTable pointsTable)
         {
             if (ModelState.IsValid)
@@ -65,6 +73,7 @@ namespace cricZee.Controllers
         }
 
         // GET: PointsTables/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
@@ -85,6 +94,7 @@ namespace cricZee.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(string id, [Bind("TeamId,Teams,Matches,Won,Lost,Tied,Points,Nrr,Nrrposition")] PointsTable pointsTable)
         {
             if (id != pointsTable.Teams)
@@ -116,6 +126,7 @@ namespace cricZee.Controllers
         }
 
         // GET: PointsTables/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -136,6 +147,7 @@ namespace cricZee.Controllers
         // POST: PointsTables/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var pointsTable = await _context.PointsTables.FindAsync(id);

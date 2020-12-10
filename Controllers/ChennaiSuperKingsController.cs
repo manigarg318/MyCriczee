@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using cricZee.Models;
+using Microsoft.AspNetCore.Authorization;
+
+using System.Diagnostics;
 
 namespace cricZee.Controllers
 {
@@ -19,12 +22,14 @@ namespace cricZee.Controllers
         }
 
         // GET: ChennaiSuperKings
+        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.ChennaiSuperKings.ToListAsync());
         }
 
         // GET: ChennaiSuperKings/Details/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -43,6 +48,7 @@ namespace cricZee.Controllers
         }
 
         // GET: ChennaiSuperKings/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
@@ -53,6 +59,7 @@ namespace cricZee.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("PlayerId,Player,PlayerRole,Price")] ChennaiSuperKing chennaiSuperKing)
         {
             if (ModelState.IsValid)
@@ -63,7 +70,7 @@ namespace cricZee.Controllers
             }
             return View(chennaiSuperKing);
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: ChennaiSuperKings/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
@@ -85,6 +92,7 @@ namespace cricZee.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(string id, [Bind("PlayerId,Player,PlayerRole,Price")] ChennaiSuperKing chennaiSuperKing)
         {
             if (id != chennaiSuperKing.Player)
@@ -116,6 +124,7 @@ namespace cricZee.Controllers
         }
 
         // GET: ChennaiSuperKings/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -136,6 +145,7 @@ namespace cricZee.Controllers
         // POST: ChennaiSuperKings/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var chennaiSuperKing = await _context.ChennaiSuperKings.FindAsync(id);
