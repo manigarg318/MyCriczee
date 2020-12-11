@@ -1,19 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using cricZee.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-
 namespace cricZee
 {
     public class Startup
@@ -37,6 +28,7 @@ namespace cricZee
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
             services.AddDbContext<projectContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:projectconstr"]));
             services.AddDbContext<quizzContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:quizzconstr"]));
             services.AddDbContext<UserAuthenticationContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:SignInConstr"]));
